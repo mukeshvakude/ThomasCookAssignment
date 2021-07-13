@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta charset="utf-8" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="../js/knockout-3.1.0.js"></script>
+    <script src="../js/knockout.validation.js"></script>
+
+   <style>
+        .validationMessage{
+            color: red;
+        } 
+   </style>
+</head>
+<body>
+
+    <div class="container" style="margin-top: 7%;">
+
+
+        <div class="row">
+
+            
+            <div class="col-md-4">
+
+                <!-- FORM -->
+                <div class="panel panel-default">
+
+                    <div class="panel-heading"> <span class="glyphicon glyphicon glyphicon-tag" aria-hidden="true"></span> <b>Register Employee</b></div>
+                    <div class="panel-body">
+
+                        <form data-bind = "submit: addNewUser" novalidate>
+
+
+                           
+                            <div class="form-group">
+                                <label for="FirstName">First Name</label>
+                                <input type="text" id="FirstName" class="form-control" data-bind="value:FirstName ,valueupdate:'afterkeydown'" placeholder="First Name" minlength="6" required/>
+                              
+                            </div><!-- END FIRST NAME -->
+
+                            
+
+                            <div class="form-group">
+                                <label for="LastName">Last Name</label>
+                                <input type="text" id="LastName" class="form-control" data-bind="value: LastName ,valueupdate:'afterkeydown'" placeholder="Last Name" required/>
+                            </div><!-- END LAST NAME -->
+
+                            
+                            <div class="form-group">
+                                <label for="Email">Email</label>
+                                <input type="email" id="Email" class="form-control" data-bind="value: Email ,valueupdate:'afterkeydown'" placeholder="Email" required/>
+                            </div> <!-- END EMAIL -->
+
+                            <div class="form-group">
+                                <label for="Age">Age</label>
+                                <input type="text" id="Age" class="form-control" data-bind="value: Age ,valueupdate:'afterkeydown'" placeholder="Age" required/>
+                            </div><!-- END Age -->
+
+                            <div class="form-group">
+                                <label for="DOB">DOB</label>
+                                <input type="date" id="DOB" class="form-control" data-bind="value: DOB ,valueupdate:'afterkeydown'" placeholder="Date of Birth" required/>
+                            </div><!-- END DOB -->
+
+                            <div class="form-group">
+                                <label for="PanNumber">PanCard Number </label>
+                                <input type="text" id="PanNumber" class="form-control" data-bind="value: PanNumber ,valueupdate:'afterkeydown'" placeholder="PanCard Number" required/>
+                            </div><!-- END PanCard -->
+
+        
+                            <div class="form-group">
+                                <label for="City">City</label>
+                                <input type="text" id="CityName" class="form-control" data-bind="value: CityName ,valueupdate:'afterkeydown'" placeholder="City Name" required/>
+                            </div> <!-- END City-->
+                            
+                            <div class="form-group">
+                                <label for="District">District</label>
+                                <input type="text" id="DistrictName" class="form-control" data-bind="value: DistrictName ,valueupdate:'afterkeydown'" placeholder="District Name" required/>
+                            </div> <!-- END District-->
+                            
+                            <div class="form-group">
+                                <label for="State">State</label>
+                                <input type="text" id="SateName" class="form-control" data-bind="value: StateName ,valueupdate:'afterkeydown'" placeholder="State Name" required/>
+                            </div> <!-- END State-->
+                            
+                            <div class="form-group">
+                                <label for="PinCode">Pin Code</label>
+                                <input type="text" id="PinCode" class="form-control" data-bind="value: PinCode ,valueupdate:'afterkeydown'" placeholder=" Enter PinCode " required/>
+                            </div> <!-- END Of Pin Code-->
+
+                            <button type="submit" class="btn btn-success"  id="Save">
+                                <span class="glyphicon  glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save
+                            </button>
+
+                            <button type="button" class="btn btn-info" data-bind="click: clearFields" id="Clear">
+                                <span class="glyphicon  glyphicon glyphicon-refresh" aria-hidden="true"></span> Clear
+                            </button>
+
+                        </form> <!-- END FORM -->
+
+
+                    </div> <!-- END PANEL BODY-->
+
+                </div><!-- END PANEL-->
+
+            </div> <!-- END  col-md-4 -->
+            
+
+            <div class="col-md-8" data-bind="visible:isAdded">
+
+                        <table class="table table-hover" border="2px">
+
+                            <thead>
+                                <tr>
+                                   
+                                    <th>#</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Pan</th>
+                                    <th>DOB</th>
+                                    <th>Age</th>
+                                    <th>City</th>
+                                    <th>District</th>
+                                    <th>State</th>
+                                    <th>Pin Code</th>
+
+                                  
+                                </tr>
+                            </thead> <!-- END THEAD -->
+
+                            <tbody data-bind="foreach: EmployeeLists">
+
+                                <tr>
+
+                                    
+                                    <td data-bind="text: ($index() +1)"></td> 
+                                
+                                    <td> <span data-bind="text: FirstName"></span></td>
+                                    <td> <span data-bind="text: LastName"></span></td>
+                                    <td> <span data-bind="text: Email"></span> </td>
+                                    <td> <span data-bind="text: PanNumber"></span> </td>
+                                    <td> <span data-bind="text: DOB"></span> </td>
+                                    <td> <span data-bind="text: Age"></span> </td>
+                                    <td> <span data-bind="text: CityName"></span> </td>
+                                    <td> <span data-bind="text: DistrictName"></span> </td>
+                                    <td> <span data-bind="text: StateName"></span> </td>
+                                    <td> <span data-bind="text: PinCode"></span> </td>               
+
+                                </tr>
+
+
+
+                            </tbody> <!-- END TBODY -->
+
+                        </table> <!-- END TABLE -->
+
+
+                  
+
+            </div> <!-- END col-md-8-->
+
+        </div> <!-- END ROW-->
+
+     
+    </div> <!-- END CONTAINER-->
+
+      <!-- JS -->
+    
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  
+   
+
+    <!-- app.js-->
+    <script src="AddEmployee.js"></script>
+   
+</body>
+</html>
