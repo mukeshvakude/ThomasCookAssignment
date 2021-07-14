@@ -13,23 +13,57 @@
         },
         message: 'Enter Valid PAN Number'
     };
-    ko.validation.registerExtenders();
+   
 
+    ko.validation.rules['text'] = {
+        validator: function (val, params) {
+            var regex = /([A-Za-z]{3})$/;
+            if (regex.test(val)) {
+                return true;
+            }
+        },
+        message: 'Only Alphabets Allowed and min 3 characters'
+    };
+    
+    ko.validation.rules['age'] = {
+        validator: function (val, params) {
+            var regex = /([0-9])$/;
+            if (regex.test(val)) {
+                if(Number(val) >=18 && Number(val) <=85)
+                    return true;
+            }
+        },
+        message: 'Age Must be between 18 to 85'
+    };
+
+    ko.validation.rules['pincode'] = {
+        validator: function (val, params) {
+            var regex = /([0-9]{6})$/;
+            if (regex.test(val)) {
+                   if(val.length == 6)
+                        return true;
+            }
+        },
+        message: 'Enter Valid Pin Code'
+    };
+   
+   
+    ko.validation.registerExtenders();
   
    
    
     var self = this;
    
-    self.FirstName = ko.observable(FirstName).extend({required : true ,  minLength: 3 , pattern: { params: '^[A-Za-z]',message:"Only Alpphabets Allowed"} });
-    self.LastName = ko.observable(LastName).extend({required : true ,  minLength: 3 , pattern: { params: '^[A-Za-z]',message:"Only Alpphabets Allowed"} });
+    self.FirstName = ko.observable(FirstName).extend({required : true , text: true});
+    self.LastName = ko.observable(LastName).extend({required : true , text: true });
     self.Email = ko.observable(Email).extend({ required : true , email: true });
-    self.Age =  ko.observable(Age).extend({required : true ,  pattern: { params: '^[0-9]',message:"Only 2 digits Numbers ", minLength: 2 } });
+    self.Age =  ko.observable(Age).extend({required : true , age:true});
     self.DOB = ko.observable(DOB).extend({ required : true});
     self.PanNumber = ko.observable(PanNumber).extend({required : true, PANCARD: true });  
-    self.CityName = ko.observable(CityName).extend({required : true ,  minLength: 3 , pattern: { params: '^[A-Za-z]',message:"Only Alphabets Allowed"} });
-    self.DistrictName = ko.observable(DistrictName).extend({required : true ,  minLength: 3 , pattern: { params: '^[A-Za-z]',message:"Only Alpphabets Allowed"} });
-    self.StateName = ko.observable(StateName).extend({required : true ,  minLength: 3 , pattern: { params: '^[A-Za-z]',message:"Only Alpphabets Allowed"} });
-    self.PinCode = ko.observable(PinCode).extend({required : true ,  pattern: { params: '^[0-9]',message:"Only 6 digits Numbers ", minLength: 2 } });
+    self.CityName = ko.observable(CityName).extend({required : true , text:true});
+    self.DistrictName = ko.observable(DistrictName).extend({required : true , text:true});
+    self.StateName = ko.observable(StateName).extend({required : true , text:true});
+    self.PinCode = ko.observable(PinCode).extend({required : true,pincode:true});
     self.EmployeeLists = ko.observableArray([]);
     self.isAdded = ko.observable(false);
     self.clearFields = function clearFields() {
