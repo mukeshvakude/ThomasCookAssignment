@@ -1,8 +1,8 @@
 
 
- function ViewModel (FirstName,LastName,Email,Age,DOB,PanNumber,CityName,DistrictName,StateName,PinCode) {
+ function Viewself (FirstName,LastName,Email,DOB,Age,PanNumber,CityName,DistrictName,StateName,PinCode) {
     
-
+    
     
     ko.validation.rules['PANCARD'] = {
         validator: function (val, params) {
@@ -17,23 +17,23 @@
 
     ko.validation.rules['text'] = {
         validator: function (val, params) {
-            var regex = /([A-Za-z]{3})$/;
+            var regex = /([A-Za-z])$/;
             if (regex.test(val)) {
                 return true;
             }
         },
-        message: 'Only Alphabets Allowed and min 3 characters'
+        message: 'Only Alphabets Allowed'
     };
     
     ko.validation.rules['age'] = {
         validator: function (val, params) {
             var regex = /([0-9])$/;
             if (regex.test(val)) {
-                if(Number(val) >=18 && Number(val) <=85)
+                if(Number(val) > 0)
                     return true;
             }
         },
-        message: 'Age Must be between 18 to 85'
+        message: 'Age Must be Number'
     };
 
     ko.validation.rules['pincode'] = {
@@ -46,12 +46,9 @@
         },
         message: 'Enter Valid Pin Code'
     };
-   
-   
+    
     ko.validation.registerExtenders();
-  
-   
-   
+
     var self = this;
    
     self.FirstName = ko.observable(FirstName).extend({required : true , text: true});
@@ -66,21 +63,7 @@
     self.PinCode = ko.observable(PinCode).extend({required : true,pincode:true});
     self.EmployeeLists = ko.observableArray([]);
     self.isAdded = ko.observable(false);
-    self.clearFields = function clearFields() {
-        self.FirstName('');
-        self.LastName('');
-        self.Email('');
-        self.Age('');
-        self.DOB ('');
-        self.PanNumber('');
-        self.CityName('');
-        self.DistrictName('');
-        self.StateName('');
-        self.PinCode('');
-    }
 
-    
-	
  
    function getEmployeeLists() {
         self.EmployeeLists();
@@ -95,12 +78,10 @@
 			alert('Thank you.');
             self.isAdded(true);
             var EmployeeObject = {
-
-          
                 FirstName: self.FirstName(),
                 LastName: self.LastName(),
                 Email: self.Email(),
-                Age:self.Age(),
+                Age: self.Age(),
                 DOB: self.DOB(),
                 PanNumber: self.PanNumber(),
                 CityName : self.CityName(),
@@ -109,16 +90,11 @@
                 PinCode :self.PinCode(), 
             };
     
-            self.EmployeeLists.push(EmployeeObject);     
-           
-           
-            self.clearFields();
-          
-    
+            self.EmployeeLists.push(EmployeeObject); 
+            console.log(self.EmployeeLists())    
 		}
 		else {
 			alert('Please check your submission.');
-			self.errors.showAllMessages();
 		}
 
                 
@@ -128,4 +104,4 @@
     getEmployeeLists();
 };
 
-ko.applyBindings(new ViewModel("","","","","","","","","",""));
+ko.applyBindings(new Viewself());
